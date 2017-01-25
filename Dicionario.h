@@ -9,7 +9,7 @@ typedef struct No * PNo;
 
 PDicionario CriaDicionario();
 void Inserir(PDicionario D, PItem I);
-PItem Remover(PNo anda, Chave C);
+int Remover(PNo anda, Chave C);
 void Imprimir(PDicionario D);
 void InserirSecundaria(PDicionario D, PItem I);
 void Percorrer(PNo anda,Chave C, PNo anterior);
@@ -24,5 +24,7 @@ void InOrdem(PNo anda);
 void InOrdemSecundaria(PNo anda);
 void InserirIterativo(PNo anda, PItem I);
 PNo CriaNo(PItem I);
-PItem RemoverIterativo(PNo raiz, Chave C);
+PNo RemoverIterativo(PNo raiz, Chave C);
+PNo InserirPai(PNo pai, PItem C);
+void RemoverPrincipal(PDicionario D, Chave C);
 #endif

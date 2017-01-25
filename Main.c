@@ -23,10 +23,10 @@ int main()
         c=7;
         PItem o = CriaItem(c);
         InserirSecundaria(D,o);
-        Buscar(D,7);
-        Buscar(D,6);
+	Buscar(D,3);
         Buscar(D,4);
-        Buscar(D,3);
+        Remover_MultiArvore(D,3);
+
         Imprimir(D);
 	return 0;
 }
