@@ -94,9 +94,9 @@ int buscaSecundaria (PNo anda, Chave C, PNo anterior){
                             anterior->direita = x;
                             return 1;
                         }else{ //caso exista,insere secundaria direita
-                        anda= anterior->secundaria;
+                        anterior->secundaria = RemoverIterativo(anterior->secundaria,C);
                         anterior = anterior->direita;
-                        anda = RemoverIterativo(anda,C);
+                        
                         anterior->secundaria = InserirRecursivo(anterior->secundaria,CriaItem(C));
                         return 1;// se achou, e fez as alterações, retorna 1
                     }
@@ -107,8 +107,7 @@ int buscaSecundaria (PNo anda, Chave C, PNo anterior){
                             anterior->esquerda = x;
                             return 1;
                         }else{  // caso exista, insere na secundaria da esquerda
-                            anda = anterior->secundaria;
-                            anda = RemoverIterativo(anda,C);
+                            anterior->secundaria = RemoverIterativo(anterior->secundaria,C);
                             anterior = anterior->esquerda;
                             anterior->secundaria =InserirRecursivo(anterior->secundaria,CriaItem(C));
                             return 1;
