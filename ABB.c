@@ -4,14 +4,14 @@ struct No
 	PItem I;
 	struct No * esquerda;
 	struct No * direita;
-        struct No * secundaria;
+  struct No * secundaria;
 };
 typedef struct No * PNo;
 
 struct Dicionario//Árvore binária de busca
 {
 	struct No* raiz;
-}; 
+};
 
 PDicionario CriaDicionario()
 {
@@ -46,14 +46,14 @@ void InserirSecundaria(PDicionario D, PItem I){
     }
 }
 PNo InserirRecursivo(PNo anda, PItem I)
-{   
-    
+{
+
 	if(anda == NULL){
 		anda = CriaNo(I);
-	}else if(ComparaChave(RetornaChave(I), RetornaChave(anda->I)) > 0){    
+	}else if(ComparaChave(RetornaChave(I), RetornaChave(anda->I)) > 0){
             anda->direita = InserirRecursivo(anda->direita, I);
-                
-	}else if(ComparaChave(RetornaChave(I), RetornaChave(anda->I)) < 0){	
+
+	}else if(ComparaChave(RetornaChave(I), RetornaChave(anda->I)) < 0){
             anda->esquerda = InserirRecursivo(anda->esquerda, I);
         }
 	return anda;
@@ -61,7 +61,7 @@ PNo InserirRecursivo(PNo anda, PItem I)
 
 int BuscarIterativo(PDicionario D, Chave C)
 {
-	PNo anda = D->raiz;	
+	PNo anda = D->raiz;
 
 	while(anda)
 		if(ComparaChave(C, RetornaChave(anda->I)) == 0){
@@ -78,7 +78,7 @@ PNo BuscarRecursivo(PNo anda, Chave C)
 {
 	if(anda == NULL){
             return;
-	}if(ComparaChave(C, RetornaChave(anda->I)) == 0)	
+	}if(ComparaChave(C, RetornaChave(anda->I)) == 0)
             return anda;
 	if(ComparaChave(C, RetornaChave(anda->I)) > 0)
 		return BuscarRecursivo(anda->direita, C);
@@ -97,7 +97,7 @@ int buscaSecundaria (PNo anda, Chave C, PNo anterior){
                         anda= anterior->secundaria;
                         anterior = anterior->direita;
                         anda = RemoverIterativo(anda,C);
-                        anterior->secundaria = InserirRecursivo(anterior->secundaria,CriaItem(C));  
+                        anterior->secundaria = InserirRecursivo(anterior->secundaria,CriaItem(C));
                         return 1;// se achou, e fez as alterações, retorna 1
                     }
                     }else if(ComparaChave(C,RetornaChave(anterior->I)) < 0 ){//olha se a chave e mnor q x
@@ -112,7 +112,7 @@ int buscaSecundaria (PNo anda, Chave C, PNo anterior){
                             anterior = anterior->esquerda;
                             anterior->secundaria =InserirRecursivo(anterior->secundaria,CriaItem(C));
                             return 1;
-                        }    
+                        }
                     }
                 }else if(ComparaChave(C, RetornaChave(anda->I)) > 0){
 			anda = anda->direita;
@@ -139,7 +139,7 @@ void Percorrer(PNo anda,Chave C, PNo anterior){//para percorrer toda a arvore
 	if(anda == NULL) return;
         anterior = anda;
         anda = anda->secundaria;
-        
+
         if (buscaSecundaria(anda,C,anterior) == 1){
             return;
         }
@@ -163,14 +163,14 @@ PNo RemoverIterativo(PNo raiz, Chave C)
 	{
 		return;
 	}
-	else	
+	else
 	{
 		PItem I = anda->I;
 
 		//Se o nó possui dois filhos
 		if(anda->direita != NULL && anda->esquerda != NULL)
 		{
-			//encontrar o maior da esquerda		
+			//encontrar o maior da esquerda
 			PNo maioresquerda = anda->esquerda;
 			while(maioresquerda->direita != NULL)
 				maioresquerda = maioresquerda->direita;
@@ -192,14 +192,14 @@ PNo RemoverIterativo(PNo raiz, Chave C)
 			}else if(ComparaChave(C, RetornaChave(ant->I)) < 0){
 				ant->esquerda = prox;
                         }
-                        
+
 			free(anda);
                         return raiz;
 		}
 		return raiz;
 	}
 }
-int Remover(PNo anda, Chave C)
+PNo Remover(PNo anda, Chave C)
 {
 	if(anda == NULL) return -1;
         PNo raiz = anda;
@@ -215,16 +215,16 @@ int Remover(PNo anda, Chave C)
 	}
 	if(anda == NULL)
 	{
-		return -1;
+		return;
 	}
-	else	
+	else
 	{
 		PItem I = anda->I;
 
 		//Se o nó possui dois filhos
 		if(anda->direita != NULL && anda->esquerda != NULL)
 		{
-			//encontrar o maior da esquerda		
+			//encontrar o maior da esquerda
 			PNo maioresquerda = anda->esquerda;
 			while(maioresquerda->direita != NULL)
 				maioresquerda = maioresquerda->direita;
@@ -248,7 +248,7 @@ int Remover(PNo anda, Chave C)
 
 			free(anda);
 		}
-		return 1;
+		return raiz;
 	}
 }
 void Remover_MultiArvore(PDicionario D, Chave C ){
@@ -275,9 +275,9 @@ void PercorrerRemocao(PNo anda,Chave C, PNo anterior){//para percorrer toda a ar
 int buscaSecundariaRemocao (PNo anda, Chave C, PNo anterior){
     while(anda){ //na arvore secundaria
 		if(ComparaChave(C, RetornaChave(anda->I)) == 0){ //compara a busca com a chave da arvore
-                       return Remover(anterior->secundaria,C);
-                       // se achou, e removeu
-                }else if(ComparaChave(C, RetornaChave(anda->I)) > 0){ 
+                       anterior->secundaria = Remover(anterior->secundaria,C);
+                       return 1;// se achou, e removeu
+                }else if(ComparaChave(C, RetornaChave(anda->I)) > 0){
                     anda = anda->direita;
 		}else{
                     anda = anda->esquerda;
@@ -290,26 +290,24 @@ int buscaSecundariaRemocao (PNo anda, Chave C, PNo anterior){
 void RemoverPrincipal(PDicionario D, Chave C){
     // ja sabemos que esta na arvore principal o que se busca
         PNo pai = NULL;
-	PNo anda = D->raiz;	
+				PNo anda = D->raiz;
         int a = 1;
 	while(a==1){
-		if(ComparaChave(C, RetornaChave(anda->I)) == 0){
-                    a=0;
-		}else if(ComparaChave(C, RetornaChave(anda->I)) > 0){
-                        pai = anda; 
-                        anda = anda->direita;
-		}else{
-                        pai = anda; 
-			anda = anda->esquerda;
-                }
-        }// meu anda é o no que quero remover
+			if(ComparaChave(C, RetornaChave(anda->I)) == 0){
+	                    a=0;
+			}else if(ComparaChave(C, RetornaChave(anda->I)) > 0){
+	                        pai = anda;
+	                        anda = anda->direita;
+			}else{
+	                        pai = anda;
+													anda = anda->esquerda;
+	    }
+	}// meu anda é o no que quero remover
     while(anda->secundaria != NULL){ // pego a raiz e comparo com null
-        InserirRecursivo(pai->secundaria,anda->secundaria->I);
-        anda->secundaria = RemoverIterativo(anda->secundaria,RetornaChave(anda->secundaria->I));
-
+        InserirRecursivo(pai->secundaria,anda->secundaria->I); //INSIRO NO PAI, A RAIZ
+        anda->secundaria = RemoverIterativo(anda->secundaria,RetornaChave(anda->secundaria->I)); // remove a raiz
     }
-       D->raiz= RemoverIterativo(D->raiz, C);
-    
+       D->raiz= RemoverIterativo(D->raiz, C); // remove da principal
 }
 /* se achar na principal, mover elementos da sua secundaria
  para a secundaria de seu pai. e depois ser removido */
@@ -317,8 +315,8 @@ void Imprimir(PDicionario D)
 {
 	if(D == NULL) return;
 
-	InOrdem(D->raiz);	
-	
+	InOrdem(D->raiz);
+
 }
 void InOrdem(PNo anda)
 {

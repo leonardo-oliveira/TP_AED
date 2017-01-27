@@ -7,26 +7,37 @@
 int main()
 {
 	PDicionario D = CriaDicionario();
-        Chave c;
-        c = 5;
-	PItem I = CriaItem(c);
-        InserirSecundaria(D, I);
-        c = 3;
-        PItem K = CriaItem(c);
-        InserirSecundaria(D, K);
-        c = 6;
-        PItem J = CriaItem(c);
-        InserirSecundaria(D, J);
-        c = 4;
-        PItem Y = CriaItem(c);
-        InserirSecundaria(D,Y);
-        c=7;
-        PItem o = CriaItem(c);
-        InserirSecundaria(D,o);
-	Buscar(D,3);
-        Buscar(D,4);
-        Remover_MultiArvore(D,3);
+	while(1)
+	{
+		char comando[20];
+		if(scanf("%s", comando) < 1 || strcmp(comando, "SAIR") == 0)
+			break;
 
-        Imprimir(D);
+		if(strcmp(comando, "INSERIR") == 0)
+		{
+			Chave c;
+			scanf("%d", &c);
+			PItem I = CriaItem(c);
+			InserirSecundaria(D, I);
+		}
+		else if(strcmp(comando, "BUSCAR") == 0)
+		{
+			Chave c;
+			scanf("%d", &c);
+
+			Buscar(D,c);
+		}
+		else if(strcmp(comando, "REMOVER") == 0)
+		{
+			Chave c;
+			scanf("%d", &c);
+
+			Remover_MultiArvore(D,c);
+		}
+		else if(strcmp(comando, "IMPRIMIR") == 0)
+		{
+			Imprimir(D);
+		}
+	}
 	return 0;
 }
