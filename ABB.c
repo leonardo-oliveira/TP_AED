@@ -258,10 +258,10 @@ void Remover_MultiArvore(PDicionario D, Chave C ){
             return;
     }
     else{
-            if(ComparaChave(C,RetornaChave(D->raiz->secundaria->I))== 0){
-
+            if(ComparaChave(C,RetornaChave(D->raiz->I))== 0){
+								PItem k = D->raiz->secundaria->I;
 								D->raiz->secundaria = Remover(D->raiz->secundaria,RetornaChave(D->raiz->secundaria->I));
-								D->raiz->I = CriaItem(C);
+								D->raiz->I = k;
                 return;
             }
         RemoverPrincipal(D,C);
