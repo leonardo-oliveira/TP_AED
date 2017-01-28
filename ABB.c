@@ -96,7 +96,7 @@ int buscaSecundaria (PNo anda, Chave C, PNo anterior){
                         }else{ //caso exista,insere secundaria direita
                         anterior->secundaria = RemoverIterativo(anterior->secundaria,C);
                         anterior = anterior->direita;
-                        
+
                         anterior->secundaria = InserirRecursivo(anterior->secundaria,CriaItem(C));
                         return 1;// se achou, e fez as alterações, retorna 1
                     }
@@ -258,8 +258,14 @@ void Remover_MultiArvore(PDicionario D, Chave C ){
             return;
     }
     else{
-       RemoverPrincipal(D,C);
-       return;
+            if(ComparaChave(C,RetornaChave(D->raiz->secundaria->I))== 0){
+
+								D->raiz->secundaria = Remover(D->raiz->secundaria,RetornaChave(D->raiz->secundaria->I));
+								D->raiz->I = CriaItem(C);
+                return;
+            }
+        RemoverPrincipal(D,C);
+        return;
     }
 }
 void PercorrerRemocao(PNo anda,Chave C, PNo anterior){//para percorrer toda a arvore

@@ -27,4 +27,5 @@ PNo CriaNo(PItem I);
 PNo RemoverIterativo(PNo raiz, Chave C);
 PNo InserirPai(PNo pai, PItem C);
 void RemoverPrincipal(PDicionario D, Chave C);
+PNo alterarItem(PNo anda, PItem i);
 #endif
