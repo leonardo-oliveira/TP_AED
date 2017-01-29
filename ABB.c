@@ -257,16 +257,55 @@ void Remover_MultiArvore(PDicionario D, Chave C ){
             PercorrerRemocao(anda, C,anterior);
             return;
     }
-    else{
-            if(ComparaChave(C,RetornaChave(D->raiz->I))== 0){
-								PItem k = D->raiz->secundaria->I;
-								D->raiz->secundaria = Remover(D->raiz->secundaria,RetornaChave(D->raiz->secundaria->I));
-								D->raiz->I = k;
-                return;
-            }
+	            if(ComparaChave(C,RetornaChave(D->raiz->I))== 0){
+												if(D->raiz->esquerda == NULL && D->raiz->direita == NULL){
+													  PItem k = D->raiz->secundaria->I;
+														D->raiz->secundaria = Remover(D->raiz->secundaria,RetornaChave(D->raiz->secundaria->I));
+														D->raiz->I = k;
+						                return;
+												}
+												//se o no possui dois filhos
+												if(D->raiz->esquerda != NULL && D->raiz->direita != NULL){
+													//encontrar o maior a esquerda
+													PNo maioresquerda = D->raiz->esquerda;
+															while(maioresquerda->direita != NULL){
+																	maioresquerda = maioresquerda->direita;
+															}
+												while(maioresquerda->secundaria != NULL){ // pego a raiz e comparo com null
+														InserirRecursivo(D->raiz->secundaria,maioresquerda->secundaria->I); //INSIRO NA RAIZ
+														maioresquerda->secundaria = RemoverIterativo(maioresquerda->secundaria,RetornaChave(maioresquerda->secundaria->I)); // remove a raiz
+												}
+													 PItem x = maioresquerda->I;
+													 D->raiz= RemoverIterativo(D->raiz, RetornaChave(x)); // remove da principal
+													 D->raiz->I = x;
+													 return;
+												}
+												PNo prox = NULL;
+												if(D->raiz->direita != NULL && D->raiz->esquerda == NULL){
+										 					prox = anda->direita;
+										 		while(prox->secundaria != NULL){ // pego a raiz e comparo com null
+												 		InserirRecursivo(D->raiz->secundaria,prox->secundaria->I); //INSIRO NA RAIZ
+												 		prox->secundaria = RemoverIterativo(prox->secundaria,RetornaChave(prox->secundaria->I)); // remove a raiz
+										 		}
+												PItem x = prox->I;
+												D->raiz= RemoverIterativo(D->raiz, RetornaChave(x)); // remove da principal
+												D->raiz->I = x;
+												return;
+									 			}
+												if(D->raiz->direita == NULL && D->raiz->esquerda != NULL){
+										 				prox = anda->esquerda;
+										 		while(prox->secundaria != NULL){ // pego a raiz e comparo com null
+												 		InserirRecursivo(D->raiz->secundaria,prox->secundaria->I); //INSIRO NA RAIZ
+												 		prox->secundaria = RemoverIterativo(prox->secundaria,RetornaChave(prox->secundaria->I)); // remove a raiz
+										 		}
+														PItem x = prox->I;
+														D->raiz= RemoverIterativo(D->raiz, RetornaChave(x)); // remove da principal
+														D->raiz->I = x;
+														return;
+									 			}
+								}
         RemoverPrincipal(D,C);
         return;
-    }
 }
 void PercorrerRemocao(PNo anda,Chave C, PNo anterior){//para percorrer toda a arvore
 	if(anda == NULL) return;
