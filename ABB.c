@@ -73,17 +73,6 @@ int BuscarIterativo(PDicionario D, Chave C)
                 }
 	return -1;
 }
-
-PNo BuscarRecursivo(PNo anda, Chave C)
-{
-	if(anda == NULL){
-            return;
-	}if(ComparaChave(C, RetornaChave(anda->I)) == 0)
-            return anda;
-	if(ComparaChave(C, RetornaChave(anda->I)) > 0)
-		return BuscarRecursivo(anda->direita, C);
-	return BuscarRecursivo(anda->esquerda, C);
-}
 int buscaSecundaria (PNo anda, Chave C, PNo anterior){
     while(anda){ //na arvore secundaria de x
 		if(ComparaChave(C, RetornaChave(anda->I)) == 0){ //compara a busca com a chave da arvore
@@ -160,7 +149,7 @@ PNo RemoverIterativo(PNo raiz, Chave C)
 	}
 	if(anda == NULL)
 	{
-		return;
+		return anda;
 	}
 	else
 	{
@@ -200,7 +189,7 @@ PNo RemoverIterativo(PNo raiz, Chave C)
 }
 PNo Remover(PNo anda, Chave C)
 {
-	if(anda == NULL) return -1;
+	if(anda == NULL) return NULL;
         PNo raiz = anda;
         PNo anterior = NULL;
         PNo pai;
@@ -306,7 +295,7 @@ void Remover_MultiArvore(PDicionario D, Chave C ){
 								}
         RemoverPrincipal(D,C);
         return;
-}
+  }
 void PercorrerRemocao(PNo anda,Chave C, PNo anterior){//para percorrer toda a arvore
 	if(anda == NULL) return;
          anterior = anda;
